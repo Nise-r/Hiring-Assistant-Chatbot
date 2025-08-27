@@ -1,16 +1,14 @@
-# 🤖 AI Chatbot 
+# Hiring Assistant Chatbot
 
-A modern, ChatGPT-like chatbot interface built with Streamlit. This application provides a beautiful and responsive chat interface where users can interact with an AI assistant.
+An AI-powered Hiring Assistant chatbot that streamlines the candidate evaluation process. The system gathers structured information (name, contact details, skills, experience, tech stack, etc.), stores it in memory for context-aware conversations, and dynamically generates relevant technical follow-up questions based on the candidate’s background.
 
-## ✨ Features
-
-- **Modern UI**: Beautiful gradient design with smooth animations
-- **Real-time Chat**: Instant message exchange with the AI
-- **Message History**: Persistent chat history during the session
-- **Timestamps**: Each message shows when it was sent
-- **Responsive Design**: Works great on desktop and mobile
-- **Clear Chat**: Option to start fresh conversations
-- **Loading States**: Visual feedback while AI is processing
+## Project Overview
+This project implements an intelligent interview assistant using LangChain + Groq LLMs + Gradio UI.
+Key capabilities include:
+- Extracting structured candidate information using Pydantic models.
+- Maintaining memory for contextual multi-turn conversations.
+- Generating follow-up technical questions tailored to the candidate’s tech stack and experience.
+- Providing a simple web-based interface for recruiters to interact with the assistant.
 
 ## 🚀 Quick Start
 
@@ -21,89 +19,55 @@ A modern, ChatGPT-like chatbot interface built with Streamlit. This application 
 
 ### Installation
 
-1. **Clone or download this project**
-
+1. **Clone the repository**
+```bash
+git clone https://github.com/your-username/Hiring-Assistant-Chatbot.git
+cd Hiring-Assistant-Chatbot
+```
 2. **Install dependencies**:
    ```bash
    pip install -r requirements.txt
    ```
+3. **Set up API keys**:
+   Change directly in code.
+   ```bash
+    os.environ['GROQ_API_KEY'] ='YOUR_API_KEY'
+   ```
 
 3. **Run the application**:
    ```bash
-   streamlit run app.py
+   gradio app.py
    ```
 
-4. **Open your browser** and navigate to the URL shown in the terminal (usually `http://localhost:8501`)
+4. **Open your browser** and navigate to the URL shown in the terminal (usually `http://localhost:7860`)
 
-## 🎯 Usage
+##  Usage
 
-1. **Start a conversation**: Type your message in the input field at the bottom
-2. **Send messages**: Click the "Send" button or press Enter
-3. **View responses**: The AI will respond with contextual messages
-4. **Clear chat**: Use the "Clear Chat" button in the sidebar to start fresh
-5. **Chat history**: All messages are preserved during your session
+1. Launch the chatbot via the Gradio interface.
+2. Provide your details (name, phone, email, experience, location, etc.).
+3. The bot will automatically parse your input into structured fields.
+4. Based on your tech stack, it will generate tailored technical interview questions.
+5. Recruiters can use these questions to conduct more informed interviews.
 
-## 🔧 Customization
+## Technical Details
+1. Frameworks & Libraries
+ - LangChain – Orchestrating LLMs, memory, and structured outputs
+ - Groq LLMs – Fast inference with LLaMA 3.1 models
+ - Gradio – Interactive web-based interface
+ - Pydantic – Enforcing structured outputs
+2. Architecture Decisions
+ - Structured Parsing → Candidate info extracted using BaseModel (Pydantic).
+ - Contextual Memory → Memory ensures continuity across turns.
+ - Question Generation → with_structured_output enforces valid JSON for follow-ups.
+ - UI → Gradio provides an easy and lightweight way to demo the chatbot.
 
-### Modifying the AI Response Function
-
-The main AI logic is in the `generate_response()` function in `app.py`. You can:
-
-- **Integrate with AI APIs**: Replace the simple response logic with calls to OpenAI, Gemini, or other AI services
-- **Add context awareness**: Implement more sophisticated conversation handling
-- **Customize responses**: Modify the response patterns and templates
-
-Example with OpenAI integration:
-```python
-import openai
-
-def generate_response(user_message):
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[{"role": "user", "content": user_message}]
-    )
-    return response.choices[0].message.content
-```
-
-### Styling Customization
-
-The app uses custom CSS for styling. You can modify the appearance by editing the CSS section in the `st.markdown()` call.
-
-## 📁 Project Structure
-
-```
-pgagi/
-├── app.py              # Main Streamlit application
-├── requirements.txt    # Python dependencies
-├── README.md          # This file
-└── Untitled.ipynb     # Jupyter notebook (if any)
-```
-
-## 🛠️ Technical Details
-
-- **Framework**: Streamlit
-- **Styling**: Custom CSS with gradients and animations
-- **State Management**: Streamlit session state
-- **Responsive Design**: Mobile-friendly interface
-- **Real-time Updates**: Automatic page refresh on new messages
-
-## 🔮 Future Enhancements
-
-- [ ] Integration with real AI models (OpenAI, Gemini, etc.)
-- [ ] File upload and processing
-- [ ] Voice input/output
-- [ ] Multi-language support
-- [ ] Conversation export
-- [ ] User authentication
-- [ ] Database storage for chat history
-
-## 🤝 Contributing
-
-Feel free to fork this project and submit pull requests for improvements!
-
-## 📄 License
-
-This project is open source and available under the MIT License.
+## Challenges & Solutions
+|Challenge	                                                  |Solution                                                                  |
+|-------------------------------------------------------------|--------------------------------------------------------------------------|
+|LLM output sometimes deviated from required JSON forma       |Used llm.with_structured_output(PydanticModel) to enforce schema          |
+|Context loss in multi-turn conversations	                    |Integrated Memory                                                         |
+|Generating irrelevant or generic follow-up questions         |Engineered prompts to include candidate’s years of experience + tech stack|
+|Strict Groq API parsing errors (tool_use_failed)	           |Debugged raw outputs, adjusted schema + prompts for exact alignment       |
 
 ---
 
