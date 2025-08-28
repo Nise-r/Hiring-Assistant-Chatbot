@@ -8,8 +8,12 @@ Key capabilities include:
 - Extracting structured candidate information using Pydantic models.
 - Maintaining memory for contextual multi-turn conversations.
 - Generating follow-up technical questions tailored to the candidate’s tech stack and experience.
+- Muli-lingual support.
 - Providing a simple web-based interface for recruiters to interact with the assistant.
 
+## Images
+![Img1](imgs/img2.png)
+![Img2](imgs/img1.png)
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -44,10 +48,11 @@ cd Hiring-Assistant-Chatbot
 ##  Usage
 
 1. Launch the chatbot via the Gradio interface.
-2. Provide your details (name, phone, email, experience, location, etc.).
-3. The bot will automatically parse your input into structured fields.
-4. Based on your tech stack, it will generate tailored technical interview questions.
-5. Recruiters can use these questions to conduct more informed interviews.
+2. Select your language from the dropdown box.
+3. Provide your details (name, phone, email, experience, location, etc.).
+4. The bot will automatically parse your input into structured fields.
+5. Based on your tech stack, it will generate tailored technical interview questions.
+6. Recruiters can use these questions to conduct more informed interviews.
 
 ## Technical Details
 1. Frameworks & Libraries
@@ -55,6 +60,7 @@ cd Hiring-Assistant-Chatbot
  - Groq LLMs – Fast inference with LLaMA 3.1 models
  - Gradio – Interactive web-based interface
  - Pydantic – Enforcing structured outputs
+ - Deep-Translator - For translation
 2. Architecture Decisions
  - Structured Parsing → Candidate info extracted using BaseModel (Pydantic).
  - Contextual Memory → Memory ensures continuity across turns.
@@ -70,5 +76,9 @@ cd Hiring-Assistant-Chatbot
 |Strict Groq API parsing errors (tool_use_failed)	           |Debugged raw outputs, adjusted schema + prompts for exact alignment       |
 
 ---
+## Future Enhancements
+
+1. Sentiment analysis to gauge candidate's confidence.
+2. Cloud deployment for scalability.
 
 **Happy Chatting! 🎉** 
